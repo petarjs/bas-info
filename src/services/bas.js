@@ -5,8 +5,8 @@ const vo = require('vo');
 const _ = require('lodash');
 const moment = require('moment');
 
-import TRAVEL_TYPES from '../const/travel-types';
-import countriesJson from '../data/countries.json';
+import TRAVEL_TYPES from '../constants/travel-types';
+import countriesJson from '../data/countries';
 
 const travelTypeRadioId = {
   [TRAVEL_TYPES.arrival]: '#rbDolasci',
@@ -20,48 +20,46 @@ const travelTypeTableId = {
 export default class BAS {
 
   constructor() {
-    this.nightmare = new Nightmare({ show: true });
-
     // Hardcoded - Serbia
     this.countryId = _.findWhere(countriesJson, { id: '9' }).id;
   }
 
   /**
    * Gets the data about arrivals/departures
-   * @param  {TRAVEL_TYPES} opts.chosenTravelType - arrivals or departures
+   * @param  {TRAVEL_TYPES} opts.travelType       - arrivals or departures
    * @param  {String}       opts.place            - Place text to search for
    * @param  {String}       opts.date             - in format 'MM/DD/YYYY', default is current day
    * @param  {Function}     callback
    */
   getData(opts, callback) {
     this.date = opts.date || moment().format('MM/DD/YYYY');
-    this.chosenTravelType = opts.chosenTravelType || TRAVEL_TYPES.departure;
+    this.chosenTravelType = opts.travelType || TRAVEL_TYPES.departure;
     this.place = opts.place;
 
     if (!opts.place) {
       throw new Error('BAS constructor: place must be provided');
     }
 
+    this.nightmare = new Nightmare({ show: false });
     this.scrapeData(callback);
   }
 
   scrapeData(callback) {
+    const that = this;
     vo(function *scrape() {
-      const chosenTravelTypeId = travelTypeRadioId[this.chosenTravelType];
-      const chosenTravelTypeTableId = travelTypeTableId[this.chosenTravelType];
+      const chosenTravelTypeId = travelTypeRadioId[that.chosenTravelType];
+      const chosenTravelTypeTableId = travelTypeTableId[that.chosenTravelType];
 
-      // const placeText = _.findWhere(placesJson, { Second: this.placeId }).First;
-
-      const link = yield this.nightmare
+      const link = yield that.nightmare
         .goto('http://www.bas.rs/redvoznje.aspx?lng=sl')
         .click(`${chosenTravelTypeId} + label`)
-        .select('select[name="ddlDani"]', this.date)
-        .select('select[name="ddlDrzava"]', this.countryId)
-        .type('input[name="txtOdredSrch"]', this.place)
+        .select('select[name="ddlDani"]', that.date)
+        .select('select[name="ddlDrzava"]', that.countryId)
+        .type('input[name="txtOdredSrch"]', that.place)
         .click('#btnTraziPD')
         .wait(1000)
-        .evaluate(this.onScrapeCompleted, chosenTravelTypeTableId);
-      yield this.nightmare.end();
+        .evaluate(that.onScrapeCompleted, chosenTravelTypeTableId);
+      yield that.nightmare.end();
       return link;
     })((err, results) => {
       if (err) return callback(err);

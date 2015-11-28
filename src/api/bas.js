@@ -1,27 +1,24 @@
-/*! React Starter Kit | MIT License | http://www.reactstarterkit.com/ */
-
 import { Router } from 'express';
 import _ from 'lodash';
 
 import BAS from '../services/bas';
-import TRAVEL_TYPES from '../const/travel-types';
-import placesJson from '../data/places.json';
+import TRAVEL_TYPES from '../constants/travel-types';
+import placesJson from '../data/places';
 
 const router = new Router();
 const bas = new BAS();
 
-router.get('/bas', async (req, res, next) => {
-  return res.status(200).send(123);
+router.get('/', async (req, res, next) => {
   try {
     const travelType = req.query.travelType;
     const placeText = req.query.place;
     const date = req.query.date;
 
     if (!placeText || placeText === 'undefined') {
-      return res.status(400).send({error: `The 'path' query parameter cannot be empty.`});
+      return res.status(400).send({error: `The 'place' query parameter cannot be empty.`});
     }
 
-    if (!(travelType in TRAVEL_TYPES)) {
+    if (travelType && !(travelType in TRAVEL_TYPES)) {
       return res.status(400).send({error: `The 'travelType' query parameter is not valid.`});
     }
 
