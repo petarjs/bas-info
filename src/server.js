@@ -9,6 +9,10 @@ import Router from './routes';
 import Html from './components/Html';
 import assets from './assets.json';
 
+global.navigator = {
+  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36',
+};
+
 const server = global.server = express();
 const port = process.env.PORT || 5000;
 server.set('port', port);
@@ -28,6 +32,7 @@ server.use('/api/content', require('./api/content'));
 // Register server-side rendering middleware
 // -----------------------------------------------------------------------------
 server.get('*', async (req, res, next) => {
+  global.navigator.agent = req.headers['user-agent'];
   try {
     let statusCode = 200;
     const data = { title: '', description: '', css: '', body: '', entry: assets.app.js };

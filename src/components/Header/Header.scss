@@ -5,14 +5,12 @@
 $brand-color: #61dafb;
 
 .Header {
-  background: #373277;
   color: #fff;
 }
 
 .Header-container {
   margin: 0 auto;
-  padding: 20px 0;
-  max-width: $max-content-width;
+  padding-bottom: 20px;
 }
 
 .Header-brand {

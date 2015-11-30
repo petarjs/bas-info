@@ -6,6 +6,9 @@ import FastClick from 'fastclick';
 import Router from './routes';
 import Location from './core/Location';
 import { addEventListener, removeEventListener } from './core/DOMUtils';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+
+injectTapEventPlugin();
 
 let cssContainer = document.getElementById('css');
 const appContainer = document.getElementById('app');
@@ -52,7 +55,7 @@ function run() {
   let currentState = null;
 
   // Make taps on links and buttons work fast on mobiles
-  FastClick.attach(document.body);
+  // FastClick.attach(document.body);
 
   // Re-render the app when window.location changes
   const unlisten = Location.listen(location => {
