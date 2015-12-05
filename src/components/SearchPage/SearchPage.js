@@ -17,15 +17,21 @@ import {
   selectDate,
   findLines,
   changeTravelType,
+  startLoading,
  } from '../../actions/actions';
 
 const AutoComplete = require('material-ui/lib/auto-complete');
+
 const DropDownMenu = require('material-ui/lib/drop-down-menu');
 const DatePickerDialog = require('material-ui/lib/date-picker/date-picker-dialog');
+
+const FloatingActionButton = require('material-ui/lib/floating-action-button');
 const RaisedButton = require('material-ui/lib/raised-button');
 const FontIcon = require('material-ui/lib/font-icon');
+
 const Snackbar = require('material-ui/lib/snackbar');
-const FloatingActionButton = require('material-ui/lib/floating-action-button');
+
+const CircularProgress = require('material-ui/lib/circular-progress');
 
 import BusLines from '../BusLines';
 
@@ -60,7 +66,7 @@ class SearchPage extends Component {
     }],
     minDate: moment().toDate(),
     maxDate: moment().add(6, 'months').toDate(),
-    resultsError: ''
+    resultsError: '',
   };
 
   constructor(props) {
@@ -87,7 +93,8 @@ class SearchPage extends Component {
   }
 
   onClickSearch(e) {
-    store.dispatch(findLines());
+    store.dispatch(startLoading());
+    setTimeout(() => store.dispatch(findLines()), 0);
   }
 
   onPlaceChange(text) {
@@ -148,18 +155,19 @@ class SearchPage extends Component {
     const title = 'Search';
     this.context.onSetTitle(title);
 
-    let place1 = <AutoComplete
-              searchText={this.state.station}
-              animated={false}
-              hintText = "Mesto"
-              dataSource= {this.state.places}
-              onUpdateInput={this.onPlaceChange.bind(this)}
-              filter={this.onPlaceFilter.bind(this)}
-              onNewRequest={this.onPlaceSelected.bind(this)} />;
+    let place1 = <span>Beograd</span>;
+    let place2 = <span>
+      <AutoComplete
+        searchText={this.state.station}
+        animated={false}
+        hintText = "Mesto"
+        dataSource= {this.state.places}
+        onUpdateInput={this.onPlaceChange.bind(this)}
+        filter={this.onPlaceFilter.bind(this)}
+        onNewRequest={this.onPlaceSelected.bind(this)} />
+    </span>;
 
-    let place2 = <span>Beograd</span>;
 
-    console.log(this.state.travelType);
     if(this.state.travelType === TRAVEL_TYPES.arrival) {
       let tmp = place1;
       place1 = place2;
@@ -185,6 +193,9 @@ class SearchPage extends Component {
           </div>
 
           <div>
+            <FontIcon style={{verticalAlign: 'super'}}>
+              <i className="material-icons">date_range</i>
+            </FontIcon>
             <DropDownMenu
               menuItems={this.state.dates}
               onChange={this.onDateChange.bind(this)} />
@@ -200,12 +211,14 @@ class SearchPage extends Component {
 
 
           <RaisedButton primary={true} label="Pretrazi" labelPosition="after" onTouchTap={this.onClickSearch.bind(this)}>
-            <FontIcon onClick={this.onChangeTravelType.bind(this)} style={{color: '#FFFFFF'}}>
+            <FontIcon onClick={this.onChangeTravelType.bind(this)} style={{color: '#FFFFFF', verticalAlign: 'bottom'}}>
               <i className="material-icons">search</i>
             </FontIcon>
           </RaisedButton>
 
-          <BusLines results={this.state.results} />
+          <CircularProgress mode="indeterminate" size={0.5} style={ this.state.loadingStatus ? {} : { display: 'none' } }/>
+
+          <BusLines results={this.state.results} station={this.state.station} date={this.state.date} />
 
           <Snackbar
             ref="snackbar"

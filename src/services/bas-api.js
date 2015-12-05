@@ -8,7 +8,8 @@ export default class BasApi {
       .get(`${API.url}/bas`)
       .query({
         station: data.station,
-        date: data.date
+        date: data.date,
+        travelType: data.travelType,
       })
       .end(cb);
   }

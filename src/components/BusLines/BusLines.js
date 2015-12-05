@@ -50,16 +50,16 @@ class BusLines extends Component {
             <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
               <TableRow>
                 <TableHeaderColumn colSpan="5" style={{textAlign: 'center'}}>
-                  <h3>Rezultati pretrage:</h3>
+                  <h3>Rezultati pretrage: {this.props.station} {this.props.date}</h3>
                 </TableHeaderColumn>
               </TableRow>
 
               <TableRow>
                 <TableHeaderColumn style={{textAlign: 'center'}} tooltip='Vreme polaska'>Polazak</TableHeaderColumn>
                 <TableHeaderColumn style={{textAlign: 'center'}} tooltip='Vreme dolaska'>Dolazak</TableHeaderColumn>
-                <TableHeaderColumn style={{textAlign: 'center'}} tooltip='Naziv prevoznika'>Prevoznik</TableHeaderColumn>
                 <TableHeaderColumn style={{textAlign: 'center'}} tooltip='Stanica sa koje polazi autobus'>Polazna stanica</TableHeaderColumn>
                 <TableHeaderColumn style={{textAlign: 'center'}} tooltip='Mesta preko kojih ide autobus'>Preko</TableHeaderColumn>
+                <TableHeaderColumn style={{textAlign: 'center'}} tooltip='Naziv prevoznika'>Prevoznik</TableHeaderColumn>
               </TableRow>
             </TableHeader>
 
@@ -74,9 +74,9 @@ class BusLines extends Component {
                   <TableRow key={i} hoverable={true} selectable={false}>
                     <TableRowColumn style={{textAlign: 'center'}}>{result.departureTime}</TableRowColumn>
                     <TableRowColumn style={{textAlign: 'center'}}>{result.arrivalTime}</TableRowColumn>
-                    <TableRowColumn style={{textAlign: 'center'}}>{result.company}</TableRowColumn>
                     <TableRowColumn style={{textAlign: 'center'}}>{result.departureStation}</TableRowColumn>
                     <TableRowColumn style={{textAlign: 'center'}} title={result.via}>{result.via}</TableRowColumn>
+                    <TableRowColumn style={{textAlign: 'center'}}>{result.company}</TableRowColumn>
                   </TableRow>
                 ) : ()=>{}
               }

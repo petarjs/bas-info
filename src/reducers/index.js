@@ -5,6 +5,8 @@ import {
   SET_LINES,
   ERROR_LINES,
   CHANGE_TRAVEL_TYPE,
+  START_LOADING,
+  STOP_LOADING
 } from '../constants/ActionTypes';
 
 import moment from 'moment';
@@ -17,6 +19,7 @@ function bas(state = {
   station: '',
   resultsError: '',
   date: moment().format('DD/MM/YYYY'),
+  loadingStatus: false,
 }, action) {
   switch (action.type) {
   case SELECT_STATION:
@@ -48,6 +51,18 @@ function bas(state = {
     return {
       ...state,
       travelType: action.travelType,
+    };
+  case START_LOADING:
+    console.log(`Action: ${action.type} --- `);
+    return {
+      ...state,
+      loadingStatus: true,
+    };
+  case STOP_LOADING:
+    console.log(`Action: ${action.type} --- `);
+    return {
+      ...state,
+      loadingStatus: false,
     };
   default:
     return state;

@@ -4,9 +4,23 @@ import {
   SET_LINES,
   ERROR_LINES,
   CHANGE_TRAVEL_TYPE,
+  START_LOADING,
+  STOP_LOADING,
 } from '../constants/ActionTypes';
 
 import BasApi from '../services/bas-api';
+
+export function startLoading() {
+  return {
+    type: START_LOADING,
+  };
+}
+
+export function stopLoading() {
+  return {
+    type: STOP_LOADING,
+  };
+}
 
 export function selectStation(station) {
   return {
@@ -39,9 +53,14 @@ export function errorLines(err) {
 
 export function findLines() {
   return function findLinesThunk(dispatch, getState) {
-    return BasApi.getLines(
-      getState().bas,
+    const state = getState().bas;
+    return BasApi.getLines({
+      station: state.station,
+      date: state.date,
+      travelType: state.travelType,
+    },
       (err, res) => {
+        dispatch(stopLoading());
         if (err) {
           return dispatch(errorLines(err.response.body.error));
         }

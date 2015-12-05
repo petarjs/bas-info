@@ -9,4 +9,6 @@ export default keyMirror({
   SET_LINES: null,
   ERROR_LINES: null,
   CHANGE_TRAVEL_TYPE: null,
+  START_LOADING: null,
+  STOP_LOADING: null,
 });
