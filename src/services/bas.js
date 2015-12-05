@@ -85,7 +85,7 @@ export default class BAS {
       const tds = [].slice.call(row.querySelectorAll('td'));
       if (travelType === '#grdDolas') {
         obj = {
-          arriavalTime: tds[0].innerHTML,
+          arrivalTime: tds[0].innerHTML,
           departureTime: tds[1].innerHTML,
           departureStation: tds[2].innerHTML,
           via: tds[3].innerHTML,
@@ -94,7 +94,7 @@ export default class BAS {
       } else {
         obj = {
           departureTime: tds[0].innerHTML,
-          arriavalTime: tds[1].innerHTML,
+          arrivalTime: tds[1].innerHTML,
           returnTicketAvailable: tds[2].innerHTML,
           platform: tds[3].innerHTML,
           distance: tds[4].innerHTML,

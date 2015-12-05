@@ -8,6 +8,7 @@ import ReactDOM from 'react-dom/server';
 import Router from './routes';
 import Html from './components/Html';
 import assets from './assets.json';
+import rateLimit from 'express-rate-limit';
 
 global.navigator = {
   userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36',
@@ -17,6 +18,11 @@ const server = global.server = express();
 const port = process.env.PORT || 5000;
 server.set('port', port);
 
+const limiter = rateLimit({
+  delayAfter: 10,
+  max: 10,
+});
+
 //
 // Register Node.js middleware
 // -----------------------------------------------------------------------------
@@ -25,6 +31,7 @@ server.use(express.static(path.join(__dirname, 'public')));
 //
 // Register API middleware
 // -----------------------------------------------------------------------------
+server.use('/api/', limiter);
 server.use('/api/bas', require('./api/bas'));
 server.use('/api/content', require('./api/content'));
 

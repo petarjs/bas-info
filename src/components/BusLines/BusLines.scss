@@ -1,0 +1,15 @@
+@import '../variables.scss';
+
+.BusLines-container {
+  margin: 0 auto;
+  padding: 0 0 40px;
+  max-width: $max-content-width;
+
+  .mui-table-row-column {
+    text-align: center;
+  }
+
+  .mui-table-row:nth-child(2n+1) td {
+    background-color: #f3f3f3 !important;
+  }
+}

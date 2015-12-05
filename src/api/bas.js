@@ -11,11 +11,11 @@ const bas = new BAS();
 router.get('/', async (req, res, next) => {
   try {
     const travelType = req.query.travelType;
-    const placeText = req.query.place;
+    const placeText = req.query.station;
     const date = req.query.date;
 
     if (!placeText || placeText === 'undefined') {
-      return res.status(400).send({error: `The 'place' query parameter cannot be empty.`});
+      return res.status(400).send({error: `The 'station' query parameter cannot be empty.`});
     }
 
     if (travelType && !(travelType in TRAVEL_TYPES)) {
