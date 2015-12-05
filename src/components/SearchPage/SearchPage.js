@@ -182,7 +182,7 @@ class SearchPage extends Component {
           <div>
             {place1}
 
-            <FloatingActionButton secondary={true} onTouchTap={this.onChangeTravelType.bind(this)} style={{verticalAlign: 'middle'}}>
+            <FloatingActionButton mini={true} secondary={true} onTouchTap={this.onChangeTravelType.bind(this)} style={{verticalAlign: 'middle'}}>
               <FontIcon>
                 <i className="material-icons">swap_horiz</i>
               </FontIcon>
@@ -218,7 +218,12 @@ class SearchPage extends Component {
 
           <CircularProgress mode="indeterminate" size={0.5} style={ this.state.loadingStatus ? {} : { display: 'none' } }/>
 
-          <BusLines results={this.state.results} station={this.state.station} date={this.state.date} />
+          {
+            this.state.results.length ?
+              <BusLines results={this.state.results} station={this.state.station} date={this.state.date} travelType={this.state.travelType} />
+            :
+              <div><h4>Izaberite mesto i datum, i pritisnite "Pretrazi"!</h4></div>
+          }
 
           <Snackbar
             ref="snackbar"

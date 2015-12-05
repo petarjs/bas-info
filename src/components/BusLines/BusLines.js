@@ -6,6 +6,7 @@ import withStyles from '../../decorators/withStyles';
 import styles from './BusLines.scss';
 import _ from 'lodash';
 import moment from 'moment';
+import TRAVEL_TYPES from '../../constants/travel-types';
 
 const Table = require('material-ui/lib/table/table');
 const TableBody = require('material-ui/lib/table/table-body');
@@ -50,7 +51,7 @@ class BusLines extends Component {
             <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
               <TableRow>
                 <TableHeaderColumn colSpan="5" style={{textAlign: 'center'}}>
-                  <h3>Rezultati pretrage: {this.props.station} {this.props.date}</h3>
+                  <h1>{this.props.travelType === TRAVEL_TYPES.arrival ? `${this.props.station} - Beograd` : `Beograd - ${this.props.station}`} - {this.props.date}</h1>
                 </TableHeaderColumn>
               </TableRow>
 
