@@ -20,7 +20,7 @@ class Header extends Component {
             title={
               <a className="Header-brand" href="/" onClick={Link.handleClick}>
                 <img className="Header-brandImg" src={require('./logo-small.png')} width="38" height="38" alt="React" />
-                <span className="Header-brandTxt">BAS PS</span>
+                <span className="Header-brandTxt">BAS INFO</span>
               </a>
             }
             iconClassNameRight="muidocs-icon-navigation-expand-more" />
