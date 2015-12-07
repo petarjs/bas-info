@@ -7,6 +7,8 @@ const moment = require('moment');
 
 import TRAVEL_TYPES from '../constants/travel-types';
 import countriesJson from '../data/countries';
+import BusLine from '../services/bus-line';
+import cache from 'memory-cache';
 
 const travelTypeRadioId = {
   [TRAVEL_TYPES.arrival]: '#rbDolasci',
@@ -40,6 +42,12 @@ export default class BAS {
       throw new Error('BAS constructor: place must be provided');
     }
 
+    const cached = cache.get(BusLine.getHash(this.chosenTravelType, this.place, this.date));
+    if (cached) {
+      callback(cached);
+      return;
+    }
+
     this.nightmare = new Nightmare({ show: false });
     this.scrapeData(callback);
   }
@@ -63,6 +71,7 @@ export default class BAS {
       return link;
     })((err, results) => {
       if (err) return callback(err);
+      cache.put(BusLine.getHash(this.chosenTravelType, this.place, this.date), results);
       callback(results);
     });
   }

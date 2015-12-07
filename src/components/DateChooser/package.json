@@ -1,0 +1,6 @@
+{
+  "name": "DateChooser",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./DateChooser.js"
+}
