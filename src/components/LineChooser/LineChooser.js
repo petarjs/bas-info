@@ -87,7 +87,7 @@ class LineChooser extends Component {
   }
 
   render() {
-    let beogradStyle = this.state.travelType === TRAVEL_TYPES.arrival ? stationTextStyle : _.extend(stationTextStyle, ta_r);
+    let beogradStyle = this.state.travelType === TRAVEL_TYPES.arrival ? stationTextStyle : Object.assign({}, stationTextStyle, ta_r);
     let place1 = <span style={beogradStyle}>Beograd</span>;
     let place2 = <span>
       <AutoComplete
