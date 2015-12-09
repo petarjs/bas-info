@@ -26,20 +26,11 @@ let allPlaces = _.pluck(placesJson, 'First');
 
 const changeTravelTypeStyle = {
   verticalAlign: 'middle',
-  margin: '0 1.4rem',
+  margin: '0',
+  position: 'absolute',
+  top: '27px',
+  right: '0',
 };
-
-const stationTextStyle = {
-  fontSize: '18px',
-  fontWeight: 'bold',
-  textTransform: 'uppercase',
-  width: '256px',
-  display: 'inline-block',
-}
-
-const ta_r = {
-  textAlign: 'right',
-}
 
 @withStyles(styles)
 class LineChooser extends Component {
@@ -87,9 +78,8 @@ class LineChooser extends Component {
   }
 
   render() {
-    let beogradStyle = this.state.travelType === TRAVEL_TYPES.arrival ? stationTextStyle : Object.assign({}, stationTextStyle, ta_r);
-    let place1 = <span style={beogradStyle}>Beograd</span>;
-    let place2 = <span>
+    let place1 = <span className="LineChooser-place"><span>{this.state.travelType === TRAVEL_TYPES.arrival ? 'do' : 'iz' }</span> Beograda</span>;
+    let place2 = <span className="LineChooser-place">
       <AutoComplete
         searchText={this.state.station}
         animated={false}
@@ -110,17 +100,15 @@ class LineChooser extends Component {
     return (
       <div className="LineChooser">
         <div className="LineChooser-container">
-          <div>
-            {place1}
+          {place1}
 
-            <FloatingActionButton mini={true} secondary={true} onTouchTap={this.onChangeTravelType.bind(this)} style={changeTravelTypeStyle}>
-              <FontIcon>
-                <i className="material-icons">swap_horiz</i>
-              </FontIcon>
-            </FloatingActionButton>
+          <FloatingActionButton mini={true} secondary={true} onTouchTap={this.onChangeTravelType.bind(this)} style={changeTravelTypeStyle}>
+            <FontIcon>
+              <i className="material-icons">swap_horiz</i>
+            </FontIcon>
+          </FloatingActionButton>
 
-            {place2}
-          </div>
+          {place2}
         </div>
       </div>
     );

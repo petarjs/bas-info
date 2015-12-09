@@ -5,5 +5,17 @@
 .LineChooser-container {
   margin: 0 auto;
   padding: 0 0 40px;
-  max-width: $max-content-width;
+  max-width: 310px;
+  position: relative
+}
+
+.LineChooser-place {
+  display: inline-block;
+  width: 100%;
+  font-size: 18px;
+  height: 48px;
+  line-height: 48px;
+  font-weight: bold;
+  text-transform: uppercase;
+  display: inline-block;
 }

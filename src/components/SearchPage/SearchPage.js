@@ -78,20 +78,25 @@ class SearchPage extends Component {
 
           <DateChooser />
 
+          <div className="SearchLines">
+            <div className="SearchLines-container">
 
-          <RaisedButton primary={true} label="Pretrazi" labelPosition="after" onTouchTap={this.onClickSearch.bind(this)}>
-            <FontIcon style={{color: '#FFFFFF', verticalAlign: 'bottom'}}>
-              <i className="material-icons">search</i>
-            </FontIcon>
-          </RaisedButton>
+              <CircularProgress mode="indeterminate" size={0.5} style={ this.state.loadingStatus ? {} : { display: 'none' } } className="SearchLines-loader" />
 
-          <CircularProgress mode="indeterminate" size={0.5} style={ this.state.loadingStatus ? {} : { display: 'none' } }/>
+              <FloatingActionButton primary={true} onTouchTap={this.onClickSearch.bind(this)}>
+                <FontIcon>
+                  <i className="material-icons">search</i>
+                </FontIcon>
+              </FloatingActionButton>
+
+            </div>
+          </div>
 
           {
             this.state.results.length ?
               <BusLines results={this.state.results} station={this.state.station} date={this.state.date} travelType={this.state.travelType} />
             :
-              <div><h4>Izaberite mesto i datum, i pritisnite "Pretrazi"!</h4></div>
+              <div><h4 className="ta-c">Izaberite mesto i datum, i pritisnite "Pretrazi"!</h4></div>
           }
 
           <Snackbar

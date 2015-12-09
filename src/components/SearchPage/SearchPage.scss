@@ -7,3 +7,18 @@
   padding: 0 0 40px;
   max-width: $max-content-width;
 }
+
+.SearchLines-container {
+  margin: 0 auto;
+  padding: 0 0 40px;
+  max-width: 310px;
+  text-align: right;
+  position: relative;
+}
+
+.SearchLines-loader {
+  position: absolute !important;
+  top: 50% !important;
+  margin-top: -50px !important;
+  right: 50%;
+}
