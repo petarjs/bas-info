@@ -65,7 +65,7 @@ export default class BAS {
         .select('select[name="ddlDrzava"]', that.countryId)
         .type('input[name="txtOdredSrch"]', that.place)
         .click('#btnTraziPD')
-        .wait(1000)
+        .wait(1200)
         .evaluate(that.onScrapeCompleted, chosenTravelTypeTableId);
       yield that.nightmare.end();
       return link;

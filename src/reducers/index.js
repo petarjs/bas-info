@@ -26,12 +26,14 @@ function bas(state = {
     console.log(`Action: ${action.type} --- Payload: ${action.station}`);
     return {
       ...state,
+      results: [],
       station: action.station,
     };
   case SELECT_DATE:
     console.log(`Action: ${action.type} --- Payload: ${action.date}`);
     return {
       ...state,
+      results: [],
       date: action.date,
     };
   case SET_LINES:
@@ -50,6 +52,7 @@ function bas(state = {
     console.log(`Action: ${action.type} --- Payload: ${action.travelType}`);
     return {
       ...state,
+      results: [],
       travelType: action.travelType,
     };
   case START_LOADING:
