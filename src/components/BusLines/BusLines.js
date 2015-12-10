@@ -7,6 +7,7 @@ import styles from './BusLines.scss';
 import _ from 'lodash';
 import moment from 'moment';
 import TRAVEL_TYPES from '../../constants/travel-types';
+import Responsive from '../../services/responsive';
 
 const Table = require('material-ui/lib/table/table');
 const TableBody = require('material-ui/lib/table/table-body');
@@ -32,59 +33,113 @@ class BusLines extends Component {
     multiSelectable: false,
     deselectOnClickaway: true,
     height: '600px',
+    expanded: []
   };
 
   constructor(props) {
     super(props);
   }
 
+  componentWillMount() {
+    this.setState({
+      expanded: this.props.results.map(r => false)
+    });
+  }
+
+  toggleExpended(i) {
+    let expanded = this.state.expanded;
+    expanded[i] = !expanded[i];
+    this.setState({
+      expanded
+    });
+  }
+
   render() {
+    let lg = <Table
+      height={this.state.height}
+      fixedHeader={this.state.fixedHeader}
+      onRowSelection={this._onRowSelection}>
+
+      <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+        <TableRow>
+          <TableHeaderColumn colSpan="5" style={{textAlign: 'center'}}>
+            <h1>{this.props.travelType === TRAVEL_TYPES.arrival ? `${this.props.station} - Beograd` : `Beograd - ${this.props.station}`} - {this.props.date}</h1>
+          </TableHeaderColumn>
+        </TableRow>
+
+        <TableRow>
+          <TableHeaderColumn style={{textAlign: 'center'}} tooltip='Vreme polaska'>Polazak</TableHeaderColumn>
+          <TableHeaderColumn style={{textAlign: 'center'}} tooltip='Vreme dolaska'>Dolazak</TableHeaderColumn>
+          <TableHeaderColumn style={{textAlign: 'center'}} tooltip='Stanica sa koje polazi autobus'>Polazna stanica</TableHeaderColumn>
+          <TableHeaderColumn style={{textAlign: 'center'}} tooltip='Mesta preko kojih ide autobus'>Preko</TableHeaderColumn>
+          <TableHeaderColumn style={{textAlign: 'center'}} tooltip='Naziv prevoznika'>Prevoznik</TableHeaderColumn>
+        </TableRow>
+      </TableHeader>
+
+      <TableBody
+        displayRowCheckbox={false}
+        deselectOnClickaway={this.state.deselectOnClickaway}
+        showRowHover={this.state.showRowHover}
+        stripedRows={this.state.stripedRows}>
+
+        {
+          this.props.results ? this.props.results.map((result, i) =>
+            <TableRow key={i} hoverable={true} selectable={false}>
+              <TableRowColumn style={{textAlign: 'center'}}>{result.departureTime}</TableRowColumn>
+              <TableRowColumn style={{textAlign: 'center'}}>{result.arrivalTime}</TableRowColumn>
+              <TableRowColumn style={{textAlign: 'center'}}>{result.departureStation}</TableRowColumn>
+              <TableRowColumn style={{textAlign: 'center'}} title={result.via}>{result.via}</TableRowColumn>
+              <TableRowColumn style={{textAlign: 'center'}}>{result.company}</TableRowColumn>
+            </TableRow>
+          ) : ()=>{}
+        }
+
+      </TableBody>
+
+    </Table>;
+
+
     return (
       <div className="BusLines">
+          <h3>{this.props.travelType === TRAVEL_TYPES.arrival ? `${this.props.station} - Beograd` : `Beograd - ${this.props.station}`} - {this.props.date}</h3>
         <div className="BusLines-container">
-          <Table
 
-            height={this.state.height}
-            fixedHeader={this.state.fixedHeader}
-            onRowSelection={this._onRowSelection}>
+          {
+            this.props.results ? this.props.results.map((result, i) => {
+              let busLinesClass = `BusLines-line ${this.state.expanded[i] ? ' BusLines-line-isExpanded': ''}`;
+              return <div className={busLinesClass} key={i} onClick={this.toggleExpended.bind(this, i)}>
+                <div className="BusLines-lineDetails">
+                  <div className="BusLines-departure">
+                    <span className="BusLines-time">{result.departureTime}</span>
+                    <span className="BusLines-station">{result.departureStation}</span>
+                  </div>
+                  <div className="BusLines-arrival">
+                    <span className="BusLines-time">{result.arrivalTime}</span>
+                    <span className="BusLines-station">{result.arrivalStation}</span>
+                  </div>
 
-            <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-              <TableRow>
-                <TableHeaderColumn colSpan="5" style={{textAlign: 'center'}}>
-                  <h1>{this.props.travelType === TRAVEL_TYPES.arrival ? `${this.props.station} - Beograd` : `Beograd - ${this.props.station}`} - {this.props.date}</h1>
-                </TableHeaderColumn>
-              </TableRow>
+                  {
+                    Responsive.isGt('xs') ?
+                      <span>stuff</span> :
+                      null
+                  }
+                </div>
 
-              <TableRow>
-                <TableHeaderColumn style={{textAlign: 'center'}} tooltip='Vreme polaska'>Polazak</TableHeaderColumn>
-                <TableHeaderColumn style={{textAlign: 'center'}} tooltip='Vreme dolaska'>Dolazak</TableHeaderColumn>
-                <TableHeaderColumn style={{textAlign: 'center'}} tooltip='Stanica sa koje polazi autobus'>Polazna stanica</TableHeaderColumn>
-                <TableHeaderColumn style={{textAlign: 'center'}} tooltip='Mesta preko kojih ide autobus'>Preko</TableHeaderColumn>
-                <TableHeaderColumn style={{textAlign: 'center'}} tooltip='Naziv prevoznika'>Prevoznik</TableHeaderColumn>
-              </TableRow>
-            </TableHeader>
+                {
+                  (this.state.expanded && this.state.expanded[i]) ?
+                    <div className="BusLines-lineDetailsExpanded">
+                      <div>Preko: <span className="fw-b">{result.via}</span></div>
+                      <div>Prevoznik: <span className="fw-b">{result.company}</span></div>
+                      { result.platform ? <div>Peron: <span className="fw-b">{result.platform}</span></div> : null }
+                      { result.returnTicketAvailable ? <div>Povratna karta: <span className="fw-b">{result.returnTicketAvailable}</span></div> : null }
+                      { result.distance ? <div>Daljina: <span className="fw-b">{result.distance} km</span></div> : null }
+                    </div>
+                    : null
+                }
+              </div>
+            }) : <h3>No results</h3>
+          }
 
-            <TableBody
-              displayRowCheckbox={false}
-              deselectOnClickaway={this.state.deselectOnClickaway}
-              showRowHover={this.state.showRowHover}
-              stripedRows={this.state.stripedRows}>
-
-              {
-                this.props.results ? this.props.results.map((result, i) =>
-                  <TableRow key={i} hoverable={true} selectable={false}>
-                    <TableRowColumn style={{textAlign: 'center'}}>{result.departureTime}</TableRowColumn>
-                    <TableRowColumn style={{textAlign: 'center'}}>{result.arrivalTime}</TableRowColumn>
-                    <TableRowColumn style={{textAlign: 'center'}}>{result.departureStation}</TableRowColumn>
-                    <TableRowColumn style={{textAlign: 'center'}} title={result.via}>{result.via}</TableRowColumn>
-                    <TableRowColumn style={{textAlign: 'center'}}>{result.company}</TableRowColumn>
-                  </TableRow>
-                ) : ()=>{}
-              }
-
-            </TableBody>
-
-          </Table>
         </div>
       </div>
     );

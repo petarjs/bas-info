@@ -16,6 +16,10 @@ html {
   line-height: 1.375; /* ~22px */
 }
 
+* {
+  box-sizing: border-box;
+}
+
 /*
  * Remove text-shadow in selection highlight:
  * https://twitter.com/miketaylr/status/12228805301
@@ -169,4 +173,8 @@ textarea {
 
 .ta-c {
   text-align: center;
+}
+
+.fw-b {
+  font-weight: bold;
 }

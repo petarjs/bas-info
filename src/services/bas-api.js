@@ -1,5 +1,6 @@
 import request from 'superagent';
 import API from '../constants/api';
+import TRAVEL_TYPES from '../constants/travel-types';
 
 export default class BasApi {
 
@@ -11,7 +12,24 @@ export default class BasApi {
         date: data.date,
         travelType: data.travelType,
       })
-      .end(cb);
-  }
+      .end((err, response) => {
+        if (!err) {
+          const results = response.body.map(result => {
+            if (data.travelType === TRAVEL_TYPES.arrival) {
+              result.arrivalStation = 'BEOGRAD';
+              result.departureStation = result.departureStation === data.station ? result.departureStation : `${data.station} (${result.departureStation})`;
+            } else {
+              result.arrivalStation = data.station;
+              result.departureStation = result.departureStation !== 'BEOGRAD' ? `BEOGRAD (${result.departureStation})` : result.departureStation;
+            }
 
+            return result;
+          });
+
+          cb(null, results);
+        } else {
+          cb(err);
+        }
+      });
+  }
 }

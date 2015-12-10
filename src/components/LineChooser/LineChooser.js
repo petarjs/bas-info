@@ -49,12 +49,7 @@ class LineChooser extends Component {
   }
 
   setPageState() {
-
     this.setState(store.getState().bas);
-
-    if(this.state.resultsError) {
-      this.showResultsError();
-    }
   }
 
   onPlaceChange(text) {

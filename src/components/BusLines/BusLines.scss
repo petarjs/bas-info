@@ -12,4 +12,40 @@
   .mui-table-row:nth-child(2n+1) td {
     background-color: #f3f3f3 !important;
   }
+
+  .BusLines-line {
+    width: 100%;
+    border-bottom: 2px solid #E9E9E9;
+
+    &:first-child {
+      border-top: 2px solid #E9E9E9;
+    }
+
+    &:hover {
+      box-shadow: inset 5px 0 0 royalblue;
+    }
+
+    &.BusLines-line-isExpanded {
+      box-shadow: inset 5px 0 0 royalblue;
+    }
+  }
+
+  .BusLines-lineDetails {
+    padding: 1rem;
+  }
+
+  .BusLines-lineDetailsExpanded {
+    padding: 1rem;
+    background-color: royalblue;
+    color: white;
+  }
+
+  .BusLines-time {
+    font-weight: bold;
+    margin-right: 1rem;
+  }
+
+  .BusLines-station {
+
+  }
 }

@@ -10,6 +10,8 @@ import {
 
 import BasApi from '../services/bas-api';
 
+const ERROR_DEFAULT = 'There was an error. Very informative, right?!';
+
 export function startLoading() {
   return {
     type: START_LOADING,
@@ -62,9 +64,9 @@ export function findLines() {
       (err, res) => {
         dispatch(stopLoading());
         if (err) {
-          return dispatch(errorLines(err.response.body.error));
+          return dispatch(errorLines(err.response.body ? err.response.body.error : ERROR_DEFAULT));
         }
-        dispatch(setLines(res.body));
+        dispatch(setLines(res));
       }
     );
   };

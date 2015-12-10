@@ -71,7 +71,7 @@ export default class BAS {
       return link;
     })((err, results) => {
       if (err) return callback(err);
-      if(results.length) {
+      if (results.length) {
         cache.put(BusLine.getHash(this.chosenTravelType, this.place, this.date), results);
       }
       callback(results);
