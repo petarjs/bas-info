@@ -13,14 +13,14 @@ class Header extends Component {
   render() {
     return (
       <div className="Header">
-        <div className="Header-container">
+        <div className="Header-container ta-c">
           <AppBar
             zDepth={0}
             showMenuIconButton={false}
             title={
               <a className="Header-brand" href="/" onClick={Link.handleClick}>
-                <img className="Header-brandImg" src={require('./logo-small.png')} width="38" height="38" alt="React" />
-                <span className="Header-brandTxt">BAS INFO</span>
+                <img className="Header-brandImg" src={require('./bus.svg')} width="38" height="38" alt="React" />
+                <span className="Header-brandTxt">BAS Red Vožnje</span>
               </a>
             }
             iconClassNameRight="muidocs-icon-navigation-expand-more" />

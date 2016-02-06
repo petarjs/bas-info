@@ -16,12 +16,17 @@ $brand-color: #61dafb;
 .Header-brand {
   color: color($brand-color lightness(+10%));
   text-decoration: none;
-  font-size: 1.75em; /* ~28px */
+  font-size: 1.25em; /* ~28px */
+}
+
+.Header-brandImg {
+  vertical-align: middle;
 }
 
 .Header-brandTxt {
   margin-left: 10px;
-  color: yellow;
+  color: #FFFFFF;
+  vertical-align: middle;
 }
 
 .Header-nav {

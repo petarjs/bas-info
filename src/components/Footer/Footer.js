@@ -23,10 +23,10 @@ class Footer extends Component {
       <div className="Footer">
         <div className="Footer-container">
           <span className="Footer-text">
-            <a className="Footer-link" href="https://petarslovic.com">© Petar Slovic</a>
+            <a className="Footer-link" href="https://petarslovic.com">© Petar Slović</a>
           </span>
           <span className="Footer-spacer">·</span>
-          <span className="Footer-text">BAS Red Voznje</span>
+          <span className="Footer-text">BAS Red Vožnje</span>
         </div>
       </div>
     );

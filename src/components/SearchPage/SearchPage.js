@@ -72,7 +72,9 @@ class SearchPage extends Component {
     return (
       <div className="SearchPage">
         <div className="SearchPage-container">
-          <h1>{title}</h1>
+          <h2 className="ta-c">
+            Pretraga autobuskih linija BAS.
+          </h2>
 
           <LineChooser />
 
@@ -96,7 +98,7 @@ class SearchPage extends Component {
             this.state.results.length ?
               <BusLines results={this.state.results} station={this.state.station} date={this.state.date} travelType={this.state.travelType} />
             :
-              <div><h4 className="ta-c">Izaberite mesto i datum, i pritisnite "Pretrazi"!</h4></div>
+              <div><h4 className="ta-c">Izaberite mesto i datum, i pritisnite "Pretraži"!</h4></div>
           }
 
           <Snackbar
