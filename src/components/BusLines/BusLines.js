@@ -9,6 +9,8 @@ import moment from 'moment';
 import TRAVEL_TYPES from '../../constants/travel-types';
 import Responsive from '../../services/responsive';
 
+import CalendarDisplay from '../CalendarDisplay/CalendarDisplay';
+
 const Table = require('material-ui/lib/table/table');
 const TableBody = require('material-ui/lib/table/table-body');
 const TableFooter = require('material-ui/lib/table/table-footer');
@@ -60,7 +62,36 @@ class BusLines extends Component {
   render() {
     return (
       <div className="BusLines">
-          <h3>{this.props.travelType === TRAVEL_TYPES.arrival ? `${this.props.station} - Beograd` : `Beograd - ${this.props.station}`} - {this.props.date}</h3>
+        <CalendarDisplay date={this.props.date} format="DD/MM/YYYY" />
+        <div className="BusLines-lineInfo fl-l">
+          {
+            this.props.travelType === TRAVEL_TYPES.arrival ?
+              <div className="BusLines-lineInfoText lineBefore">
+                <h3>{this.props.station}</h3>
+                <h3>Beograd</h3>
+                <h3>Broj linija: {_.size(this.props.results)}</h3>
+              </div>
+              :
+              <div className="BusLines-lineInfoText lineBefore">
+                <h3>Beograd</h3>
+                <h3>{this.props.station}</h3>
+                <h3>Broj linija: {_.size(this.props.results)}</h3>
+              </div>
+          }
+        </div>
+
+        {
+          _.size(this.props.results) > 1 ?
+            <div className="BusLines-lineInfo fl-r">
+              <div className="BusLines-lineInfoText">
+                <h3 className="fw-n">Iz: {_.capitalize(_.first(this.props.results).departureStation.toLowerCase())}</h3>
+                <h3 className="fw-n">Prvi polazak: {_.first(this.props.results).departureTime}</h3>
+                <h3 className="fw-n">Poslednji polazak: {_.last(this.props.results).departureTime}</h3>
+              </div>
+            </div>
+            : null
+        }
+
         <div className="BusLines-container">
 
           {

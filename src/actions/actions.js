@@ -10,7 +10,7 @@ import {
 
 import BasApi from '../services/bas-api';
 
-const ERROR_DEFAULT = 'There was an error. Very informative, right?!';
+const ERROR_DEFAULT = 'Doslo je do greske. Propbajte ponovo! :)';
 
 export function startLoading() {
   return {
@@ -64,7 +64,16 @@ export function findLines() {
       (err, res) => {
         dispatch(stopLoading());
         if (err) {
-          return dispatch(errorLines(err.response.body ? err.response.body.error : ERROR_DEFAULT));
+          let errorText;
+          if (typeof err === 'string') {
+            errorText = err;
+          } else if (err.response && err.response.body) {
+            errorText = err.response.body.error;
+          } else {
+            errorText = ERROR_DEFAULT;
+          }
+
+          return dispatch(errorLines(errorText));
         }
         dispatch(setLines(res));
       }

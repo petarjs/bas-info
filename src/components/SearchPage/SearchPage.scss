@@ -6,6 +6,11 @@
   margin: 0 auto;
   padding: 0 0 40px;
   max-width: $max-content-width;
+
+  > h1 {
+    text-align: center;
+    margin-bottom: 80px;
+  }
 }
 
 .SearchLines-container {

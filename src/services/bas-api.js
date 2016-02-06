@@ -13,7 +13,7 @@ export default class BasApi {
         travelType: data.travelType,
       })
       .end((err, response) => {
-        if (!err) {
+        if (!response.body.error) {
           const results = response.body.map(result => {
             if (data.travelType === TRAVEL_TYPES.arrival) {
               result.arrivalStation = 'BEOGRAD';
@@ -28,7 +28,7 @@ export default class BasApi {
 
           cb(null, results);
         } else {
-          cb(err);
+          cb(response.body.error);
         }
       });
   }

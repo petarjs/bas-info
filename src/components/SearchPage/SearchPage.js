@@ -66,7 +66,7 @@ class SearchPage extends Component {
 
   render() {
     console.log('render search page');
-    const title = 'Search';
+    const title = 'BAS Red Voznje';
     this.context.onSetTitle(title);
 
     return (

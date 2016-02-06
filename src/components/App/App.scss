@@ -14,10 +14,20 @@ html {
   font-size: 1em; /* ~16px; */
   font-family: $font-family-base;
   line-height: 1.375; /* ~22px */
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin: 0 0 135px; /* bottom = footer height */
 }
 
 * {
   box-sizing: border-box;
+}
+
+button {
+  background-color: #FF9900;
 }
 
 /*
@@ -177,4 +187,30 @@ textarea {
 
 .fw-b {
   font-weight: bold;
+}
+
+.fl-r {
+  float: right;
+}
+
+.fl-l {
+  float: left;
+}
+
+.fw-n {
+  font-weight: normal;
+}
+
+.App-container {
+
+}
+
+.footer-container {
+  background-color: orange;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 135px;
+  width: 100%;
+  overflow:hidden;
 }

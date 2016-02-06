@@ -6,7 +6,7 @@ import {
   ERROR_LINES,
   CHANGE_TRAVEL_TYPE,
   START_LOADING,
-  STOP_LOADING
+  STOP_LOADING,
 } from '../constants/ActionTypes';
 
 import moment from 'moment';

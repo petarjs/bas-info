@@ -1,9 +1,36 @@
 @import '../variables.scss';
+.BusLines {
+  .BusLines-lineInfo {
+    vertical-align: middle;
+    display: table;
+    height: 170px;
+    margin-left: 30px;
+
+    .BusLines-lineInfoText {
+      display: table-cell;
+      vertical-align: middle;
+      font-size: 24px;
+
+      > h3 {
+        margin: 0;
+      }
+
+      .lineBefore {
+        &::before {
+          content: '|';
+          display: inline-block;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}
 
 .BusLines-container {
   margin: 0 auto;
   padding: 0 0 40px;
   max-width: $max-content-width;
+  clear: both;
 
   .mui-table-row-column {
     text-align: center;
@@ -22,12 +49,13 @@
     }
 
     &:hover {
-      box-shadow: inset 5px 0 0 royalblue;
+      box-shadow: inset 5px 0 0 #ff4081;
     }
 
     &.BusLines-line-isExpanded {
-      box-shadow: inset 5px 0 0 royalblue;
+      box-shadow: inset 5px 0 0 #ff4081;
     }
+
   }
 
   .BusLines-lineDetails {
@@ -36,7 +64,7 @@
 
   .BusLines-lineDetailsExpanded {
     padding: 1rem;
-    background-color: royalblue;
+    background-color: #ff4081;
     color: white;
   }
 

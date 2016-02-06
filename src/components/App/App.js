@@ -20,10 +20,14 @@ class App extends Component {
   render() {
     return !this.props.error ? (
       <div>
-        <Header />
-        {this.props.children}
-        <Feedback />
-        <Footer />
+        <div className="App-container">
+          <Header />
+          {this.props.children}
+        </div>
+        <div className="footer-container">
+          <Feedback />
+          <Footer />
+        </div>
       </div>
     ) : this.props.children;
   }
